@@ -1,26 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import logo from "./logo.svg";
+import styles from "./App.module.css";
+import { Navigate, Route, Routes } from "react-router-dom";
+import CollectionsList from "./components/CollectionsList";
+import Collection from "./components/Collection";
+import CollectionsListPage from "./pages/CollectionsListPage/CollectionsListPage";
+import CollectionPage from "./pages/CollectionPage/CollectionPage";
+import { useFetchCards } from "./hooks/useFetchCards";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+   useFetchCards();
+
+   return (
+      <div className={styles.app}>
+         <Routes>
+            <Route
+               index
+               path="/collections"
+               element={<CollectionsListPage />}
+            />
+            <Route path="/collections/:id" element={<CollectionPage />} />
+            <Route path="*" element={<Navigate to="/collections" />} />
+         </Routes>
+      </div>
+   );
 }
 
 export default App;
