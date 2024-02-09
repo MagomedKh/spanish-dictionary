@@ -2,42 +2,42 @@ import { Flex, Input, Typography } from "antd";
 import { ChangeEvent, FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router";
-import { deleteCard, editCard } from "../../../store/sagas/cardsSaga";
-import { selectCurrentCard } from "../../../store/slices/CollectionsSlice";
-import { CollectionPageNavState } from "../../../types/CollectionPageNavState";
+import { deleteDictionary, editDictionary } from "../../../store/sagas/dictionariesSaga";
+import { selectCurrentDictionary } from "../../../store/slices/DictionariesSlice";
+import { DictionaryPageNavState } from "../../../types/DictionaryPageNavState";
 import ActionsButtonGroup from "../ActionsButtonGroup/ActionsButtonGroup";
-import styles from "./CollectionInfo.module.scss";
+import styles from "./DictionaryInfo.module.scss";
 
 const initialEditValue = { title: "", coverImage: "" };
 
-const CollectionInfo: FC = () => {
+const DictionaryInfo: FC = () => {
    const dispatch = useDispatch();
    const navigate = useNavigate();
-   const location = useLocation() as { state: CollectionPageNavState | null };
+   const location = useLocation() as { state: DictionaryPageNavState | null };
 
    const [isEditing, setIsEditing] = useState(!!location.state?.isNew);
    const [editing, setEditing] = useState(initialEditValue);
 
-   const currentCard = useSelector(selectCurrentCard);
+   const currentDictionary = useSelector(selectCurrentDictionary);
 
    useEffect(() => {
-      if (currentCard?.coverImage && currentCard?.title) {
+      if (currentDictionary?.coverImage && currentDictionary?.title) {
          setEditing({
-            title: currentCard.title,
-            coverImage: currentCard.coverImage,
+            title: currentDictionary.title,
+            coverImage: currentDictionary.coverImage,
          });
       }
-   }, [currentCard?.coverImage, currentCard?.title]);
+   }, [currentDictionary?.coverImage, currentDictionary?.title]);
 
-   if (!currentCard) return <></>;
+   if (!currentDictionary) return <></>;
 
    const toggleEdit = () => {
       setIsEditing((prev) => !prev);
    };
 
    const handleDelete = () => {
-      dispatch(deleteCard(currentCard.id));
-      navigate("/collections");
+      dispatch(deleteDictionary(currentDictionary.id));
+      navigate("/dictionaries");
    };
 
    const handleInfoEditing = ({ value, name }: { value: string; name: string }) => {
@@ -46,7 +46,7 @@ const CollectionInfo: FC = () => {
 
    const saveInfo = () => {
       if (editing.title && editing.coverImage) {
-         dispatch(editCard({ id: currentCard.id, infoData: editing }));
+         dispatch(editDictionary({ id: currentDictionary.id, infoData: editing }));
 
          setIsEditing(false);
       }
@@ -54,10 +54,14 @@ const CollectionInfo: FC = () => {
 
    return (
       <Flex justify="space-between">
-         <Flex align="center" className={styles.collectionInfo}>
+         <Flex align="center" className={styles.dictionaryInfo}>
             <div className={styles.imgBlock}>
                {!isEditing ? (
-                  <img src={currentCard.coverImage} className={styles.img} alt="Некорректный URL" />
+                  <img
+                     src={currentDictionary.coverImage}
+                     className={styles.img}
+                     alt="Некорректный URL"
+                  />
                ) : (
                   <Flex vertical justify="center" className={styles.imgUrlInputWrapper}>
                      <Typography.Text>Сылка на изображение</Typography.Text>
@@ -86,7 +90,7 @@ const CollectionInfo: FC = () => {
                   icon: <></>,
                }}
             >
-               {editing.title || currentCard.title}
+               {editing.title || currentDictionary.title}
             </Typography.Title>
          </Flex>
 
@@ -100,4 +104,4 @@ const CollectionInfo: FC = () => {
    );
 };
 
-export default CollectionInfo;
+export default DictionaryInfo;

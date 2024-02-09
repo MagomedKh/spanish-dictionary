@@ -1,5 +1,5 @@
 import { PayloadAction } from "@reduxjs/toolkit";
-import { ICard, IWord } from "../types/Collection";
+import { IDictionary, IWord } from "../types/Dictionary";
 
 export const CREATE_CARD = "CREATE_CARD";
 export const DELETE_CARD = "DELETE_CARD";
@@ -9,15 +9,15 @@ export const ADD_WORD = "ADD_WORD";
 export const EDIT_WORD = "EDIT_WORD";
 export const DELETE_WORD = "DELETE_WORD";
 
-export type CreateCardAction = PayloadAction<ICard, typeof CREATE_CARD>;
-export type EditCardAction = PayloadAction<
+export type CreateDictionaryAction = PayloadAction<IDictionary, typeof CREATE_CARD>;
+export type EditDictionaryAction = PayloadAction<
    {
       id: string;
-      infoData: Pick<ICard, "coverImage" | "title">;
+      infoData: Pick<IDictionary, "coverImage" | "title">;
    },
    typeof EDIT_CARD
 >;
-export type DeleteCardAction = PayloadAction<string, typeof DELETE_CARD>;
+export type DeleteDictionaryAction = PayloadAction<string, typeof DELETE_CARD>;
 
 export type AddWordAction = PayloadAction<
    { cardId: string; word: { learn: string; en: string; ru: string } },

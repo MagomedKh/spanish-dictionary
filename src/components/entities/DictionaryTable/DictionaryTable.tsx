@@ -4,23 +4,23 @@ import { Table, Typography } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteWord, editWord } from "../../../store/sagas/wordsSaga";
-import { selectCurrentCard } from "../../../store/slices/CollectionsSlice";
-import { IWord } from "../../../types/Collection";
+import { selectCurrentDictionary } from "../../../store/slices/DictionariesSlice";
+import { IWord } from "../../../types/Dictionary";
 import ActionsButtonGroup from "../ActionsButtonGroup/ActionsButtonGroup";
-import styles from "./CollectionTable.module.scss";
+import styles from "./DictionaryTable.module.scss";
 
 const initialEditValue = { learnWord: "", en: "", ru: "", id: "" };
 
 // TODO decompose editing to hook (includes editing info)
-const CollectionTable: FC = () => {
+const DictionaryTable: FC = () => {
    const dispatch = useDispatch();
 
    const [edit, setEdit] = useState(initialEditValue);
 
-   const currentCard = useSelector(selectCurrentCard);
-   const cardId = currentCard?.id;
+   const currentDictionary = useSelector(selectCurrentDictionary);
+   const cardId = currentDictionary?.id;
 
-   if (!currentCard || !cardId) {
+   if (!currentDictionary || !cardId) {
       return <></>;
    }
 
@@ -143,8 +143,8 @@ const CollectionTable: FC = () => {
       );
    }
 
-   return currentCard?.words.length > 0 ? (
-      <Table dataSource={currentCard.words} columns={columns} rowKey="id" bordered />
+   return currentDictionary?.words.length > 0 ? (
+      <Table dataSource={currentDictionary.words} columns={columns} rowKey="id" bordered />
    ) : (
       <Typography.Title level={3} type="warning">
          Список слов пуст
@@ -152,4 +152,4 @@ const CollectionTable: FC = () => {
    );
 };
 
-export default CollectionTable;
+export default DictionaryTable;

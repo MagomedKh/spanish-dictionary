@@ -2,7 +2,7 @@ import { Button, Flex, Form, Input, Typography } from "antd";
 import { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addWord } from "../../../store/sagas/wordsSaga";
-import { selectCurrentCardId } from "../../../store/slices/CollectionsSlice";
+import { selectCurrentDictionaryId } from "../../../store/slices/DictionariesSlice";
 import styles from "./AddWordForm.module.scss";
 
 const initialFormValue = { learn: "", ru: "", en: "" };
@@ -11,7 +11,7 @@ const AddWordForm: FC = () => {
    const dispatch = useDispatch();
    const [form] = Form.useForm<typeof initialFormValue>();
 
-   const cardId = useSelector(selectCurrentCardId);
+   const cardId = useSelector(selectCurrentDictionaryId);
 
    const handleCreateWord = () => {
       if (cardId) {

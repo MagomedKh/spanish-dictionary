@@ -1,7 +1,7 @@
 import { arrayUnion } from "firebase/firestore";
 import { takeLatest } from "redux-saga/effects";
-import { getCardControler, updateCardControler } from "../../firebase/controlers";
-import { ICard } from "../../types/Collection";
+import { getDictionaryControler, updateDictionaryControler } from "../../firebase/controlers";
+import { IDictionary } from "../../types/Dictionary";
 import {
    ADD_WORD,
    AddWordAction,
@@ -24,30 +24,30 @@ function* addWordSaga({ payload }: AddWordAction) {
       id: crypto.randomUUID().slice(0, 8),
    };
 
-   yield updateCardControler({
+   yield updateDictionaryControler({
       cardId: payload.cardId,
       updatedData: {
-         words: arrayUnion(word) as unknown as ICard["words"],
+         words: arrayUnion(word) as unknown as IDictionary["words"],
       },
    });
 }
 
 function* deleteWordsSaga({ payload }: DeleteWordAction) {
-   const card: ICard = yield getCardControler(payload.cardId);
+   const dictionary: IDictionary = yield getDictionaryControler(payload.cardId);
 
-   const filteredWords = card.words.filter((word) => word.id !== payload.wordId);
+   const filteredWords = dictionary.words.filter((word) => word.id !== payload.wordId);
 
-   updateCardControler({ cardId: payload.cardId, updatedData: { words: filteredWords } });
+   updateDictionaryControler({ cardId: payload.cardId, updatedData: { words: filteredWords } });
 }
 
 function* editWordSaga({ payload }: EditWordAction) {
-   const card: ICard = yield getCardControler(payload.cardId);
-   const words = card.words;
+   const dictionary: IDictionary = yield getDictionaryControler(payload.cardId);
+   const words = dictionary.words;
 
    const editWordId = words.findIndex((word) => word.id === payload.word.id);
    words[editWordId] = payload.word;
 
-   updateCardControler({ cardId: payload.cardId, updatedData: { words } });
+   updateDictionaryControler({ cardId: payload.cardId, updatedData: { words } });
 }
 
 export const addWord = (payload: AddWordAction["payload"]): AddWordAction => ({

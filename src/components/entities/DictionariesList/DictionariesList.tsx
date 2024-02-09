@@ -1,18 +1,20 @@
 import { Flex, Typography } from "antd";
 import { FC } from "react";
 import { useSelector } from "react-redux";
-import { selectCards, selectIsLoading } from "../../../store/slices/CollectionsSlice";
-import CollectionCard from "../CollectionCard/CollectionCard";
+import { selectDictionaries, selectIsLoading } from "../../../store/slices/DictionariesSlice";
+import DictionaryCard from "../DictionaryCard/DictionaryCard";
 
-const CollectionsList: FC = () => {
-   const cards = useSelector(selectCards);
+const DictionariesList: FC = () => {
+   const dictionaries = useSelector(selectDictionaries);
    const isLoading = useSelector(selectIsLoading);
 
    return (
       <Flex gap={16} wrap="wrap">
          {!isLoading ? (
-            cards.length ? (
-               cards.map((card) => <CollectionCard card={card} key={card.id} />)
+            dictionaries.length ? (
+               dictionaries.map((dictionary) => (
+                  <DictionaryCard dictionary={dictionary} key={dictionary.id} />
+               ))
             ) : (
                <Typography.Title type="warning">Список пуст</Typography.Title>
             )
@@ -23,4 +25,4 @@ const CollectionsList: FC = () => {
    );
 };
 
-export default CollectionsList;
+export default DictionariesList;

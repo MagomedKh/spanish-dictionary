@@ -1,17 +1,17 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import { useFetchCards } from "../hooks/useFetchCards";
-import CollectionPage from "../pages/CollectionPage/CollectionPage";
-import CollectionsListPage from "../pages/CollectionsListPage/CollectionsListPage";
+import { useFetchDictionaries } from "../hooks/useFetchDictionaries";
+import DictionariesListPage from "../pages/DictionariesListPage/DictionariesListPage";
+import DictionaryPage from "../pages/DictionaryPage/DictionaryPage";
 import "./index.css";
 
 function App() {
-   useFetchCards();
+   useFetchDictionaries();
 
    return (
       <Routes>
-         <Route index path="/collections" element={<CollectionsListPage />} />
-         <Route path="/collections/:id" element={<CollectionPage />} />
-         <Route path="*" element={<Navigate to="/collections" />} />
+         <Route index path="/dictionaries" element={<DictionariesListPage />} />
+         <Route path="/dictionaries/:id" element={<DictionaryPage />} />
+         <Route path="*" element={<Navigate to="/dictionaries" />} />
       </Routes>
    );
 }

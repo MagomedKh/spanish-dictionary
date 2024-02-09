@@ -13,4 +13,4 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 
-export const cardsCollection = collection(db, "cards");
+export const dictionariesCollection = collection(db, "dictionaries");

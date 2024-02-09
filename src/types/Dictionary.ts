@@ -7,7 +7,7 @@ export interface IWord {
    };
 }
 
-export interface ICard {
+export interface IDictionary {
    id: string;
    configs: any;
    coverImage: string;
