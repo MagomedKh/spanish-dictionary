@@ -1,22 +1,20 @@
 import { DocumentData, QuerySnapshot, onSnapshot } from "firebase/firestore";
 import { useEffect } from "react";
-import { ICard } from "../models/Collection";
-import { cardsCollection } from "../store/firebase";
 import { useDispatch } from "react-redux";
-import { setCards } from "../store/slices/CollectionsSlice";
+import { cardsCollection } from "../firebase/firebase";
+import { setCards, setIsLoading } from "../store/slices/CollectionsSlice";
+import { ICard } from "../types/Collection";
 
 export const useFetchCards = () => {
    const dispatch = useDispatch();
 
    useEffect(() => {
-      onSnapshot(
-         cardsCollection,
-         (querySnapshot: QuerySnapshot<DocumentData>) => {
-            const cards = querySnapshot.docs.map((doc) => doc.data() as ICard);
+      dispatch(setIsLoading(true));
 
-            dispatch(setCards(cards));
-         }
-      );
-      // dispatch(getCards());
+      onSnapshot(cardsCollection, (querySnapshot: QuerySnapshot<DocumentData>) => {
+         const cards = querySnapshot.docs.map((doc) => doc.data() as ICard);
+
+         dispatch(setCards(cards));
+      });
    }, []);
 };

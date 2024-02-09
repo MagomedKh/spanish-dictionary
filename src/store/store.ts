@@ -1,21 +1,14 @@
-import {
-   combineReducers,
-   configureStore,
-   ReducersMapObject,
-} from "@reduxjs/toolkit";
 import createSagaMiddleware from "@redux-saga/core";
-import { cardsSlice } from "./slices/CollectionsSlice";
-import rootSaga from "./saga";
+import { configureStore } from "@reduxjs/toolkit";
+import { rootReducer } from "./rootReducer";
+import rootSaga from "./sagas/rootSaga";
 
 const sagaMiddleware = createSagaMiddleware();
 
-const rootReducer = combineReducers({ cards: cardsSlice.reducer });
-
 export const store = configureStore({
    reducer: rootReducer,
+   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(sagaMiddleware),
    devTools: true,
-   middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(sagaMiddleware),
 });
 
 sagaMiddleware.run(rootSaga);

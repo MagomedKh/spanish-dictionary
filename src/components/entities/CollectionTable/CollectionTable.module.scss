@@ -1,0 +1,11 @@
+.cellText {
+   margin-bottom: 0 !important;
+   margin-top: 0px;
+
+   &.active {
+      margin-top: 4px;
+   }
+   & > * {
+      line-height: 18px !important;
+   }
+}

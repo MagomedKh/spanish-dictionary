@@ -1,0 +1,17 @@
+.buttonGroup {
+   align-self: flex-start;
+
+   opacity: 0.6;
+   border: 2px transparent solid;
+   border-radius: 8px;
+   transition:
+      opacity ease-in-out 0.2s,
+      border-color ease-in-out 0.2s;
+
+   &:hover {
+      opacity: 1;
+   }
+   &.active {
+      border-color: rgb(20, 168, 23);
+   }
+}

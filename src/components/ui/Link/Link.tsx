@@ -1,17 +1,25 @@
 import { Typography } from "antd";
-import { FC, PropsWithChildren, ReactNode } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { FC, ReactNode } from "react";
+import { To, useNavigate } from "react-router-dom";
+import styles from "./Link.module.scss";
 
 interface ILink {
    children: ReactNode;
-   to: string;
+   to: To;
+   className?: string;
 }
 
-const Link: FC<ILink> = ({ children, to }) => {
+const Link: FC<ILink> = ({ children, to, className }) => {
+   const navigate = useNavigate();
+
+   const handleClick = () => {
+      navigate(to);
+   };
+
    return (
-      // <Typography.Link>
-      <RouterLink to={to}>{children}</RouterLink>
-      // </Typography.Link>
+      <Typography.Link onClick={handleClick} className={`${styles.link} ${className}`}>
+         {children}
+      </Typography.Link>
    );
 };
 

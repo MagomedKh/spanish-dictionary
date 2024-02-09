@@ -6,7 +6,6 @@ export const getNextObjId: GetNextId = (arr) => {
    }
 
    const itemsNumIds = arr.map((item) => parseInt(item.id));
-
    const nextId = Math.max(...itemsNumIds) + 1;
 
    return nextId.toString();
